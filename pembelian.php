@@ -52,7 +52,7 @@ if (isset($_POST['add'])) {
 $id_user = $_SESSION['id_user'];  // Assuming user is logged in
 
 // Prepare the insert query with id_user
-$query = $koneksi->prepare("INSERT INTO detail_pembelian (id_pembelian, id_barang, jumlah_barang, id_user) VALUES (?, ?, ?, ?)");
+$query = $koneksi->prepare("REPLACE INTO detail_pembelian (id_pembelian, id_barang, jumlah_barang, id_user) VALUES (?, ?, ?, ?)");
 
 // Bind the parameters (including id_user)
 $query->bind_param("iiii", $id_pembelian, $barang_id, $jumlah, $id_user);
@@ -81,10 +81,9 @@ $query->execute();
         }
 
         // Log the purchase into laporan_inventaris
-        $query = $koneksi->prepare("INSERT INTO laporan_inventaris (id_barang, id_user, tipe_aktivitas, jumlah, tanggal) VALUES (?, ?, ?, ?, ?)");
-        $tipe_aktivitas = 'pembelian'; // Activity type is 'pembelian'
+        $query = $koneksi->prepare("INSERT INTO laporan_inventaris (id_barang, id_user, id_supplier, jumlah, tanggal) VALUES (?, ?, ?, ?, ?)");
         $tanggal = date('Y-m-d H:i:s');
-        $query->bind_param("iiiss", $barang_id, $id_user, $tipe_aktivitas, $jumlah, $tanggal);
+        $query->bind_param("iiiss", $barang_id, $id_user, $id_supplier, $jumlah, $tanggal);
         if (!$query->execute()) {
             echo "Error logging transaction: " . $query->error;
             exit();

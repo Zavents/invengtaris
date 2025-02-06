@@ -97,6 +97,9 @@
         transform: translate(0);
         box-shadow: none;
     }
+    .nav{
+        text-decoration: none !important;
+    }
 
 </style>
 
