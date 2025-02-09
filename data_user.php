@@ -18,7 +18,6 @@ if ($koneksi->connect_error) {
     die("Koneksi gagal: " . $koneksi->connect_error);
 }
 
-// Handle user registration
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -50,8 +49,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
         }
     }
 }
-
-// Handle delete user
 if (isset($_GET['delete'])) {
     $id_user = $_GET['delete'];
     $query = $koneksi->prepare("DELETE FROM users WHERE id_user = ?");
@@ -66,7 +63,6 @@ if (isset($_GET['delete'])) {
     }
 }
 
-// Handle edit user
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_user'])) {
     $id_user = $_POST['id_user'];
     $username = $_POST['username'];
@@ -84,7 +80,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_user'])) {
     }
 }
 
-// Fetch all users
 $query = "SELECT id_user, username, name, level FROM users";
 $result = $koneksi->query($query);
 ?>
@@ -149,7 +144,6 @@ $result = $koneksi->query($query);
 
 </head>
 <body style="background-image: url(./img/bg.png);">
-<!-- Include Navbar -->
 <?php include 'navbar.php'; ?>
 
 <div class="container mt-5">
@@ -160,7 +154,7 @@ $result = $koneksi->query($query);
 
     <!-- Add New User Form -->
     <div class="card p-4 mb-4" onmouseover="this.style.borderColor='rgb(0, 162, 255)'" onmouseout="this.style.borderColor='rgb(0, 0, 0)'">
-    <h3>Add New User</h3>
+    <h3>Tambahkan User Baru</h3>
     <form method="post" action="">
         <div class="row mb-3">
             <div class="col-md-6">
@@ -208,7 +202,7 @@ $result = $koneksi->query($query);
                     <th>ID</th>
                     <th>Username</th>
                     <th>Full Name</th>
-                    <th>Access Level</th>
+                    <th>Akses User</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -220,8 +214,8 @@ $result = $koneksi->query($query);
                         <td><?php echo $row['name']; ?></td>
                         <td><?php echo ucfirst($row['level']); ?></td>
                         <td>
-                            <a href="edit_user.php?id=<?php echo $row['id_user']; ?>" class="btn btn-warning btn-sm">Edit</a>
-                            <a href="?delete=<?php echo $row['id_user']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+                            <a href="edit_user.php?id=<?php echo $row['id_user']; ?>" class="button-edit btn-sm">Edit</a>
+                            <a href="?delete=<?php echo $row['id_user']; ?>" class="button-hapus btn-sm" onclick="return confirm('Are you sure?')">Hapus</a>
                         </td>
                     </tr>
                 <?php endwhile; ?>

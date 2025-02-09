@@ -36,23 +36,13 @@
 
     </style>
     
-<style>        .navbar { background: #333; padding: 10px; }
+<style>        .navbar { background: #333; padding: 10px; text-decoration: none !important;}
         .navbar a { color: white; margin: 10px; text-decoration: none; }
-        .navbar a:hover { text-decoration: underline; }
+        .navbar a:hover { text-decoration: none !important;}
         .container { padding: 20px; }</style>
         
     <style>
-    .button:hover {
-        color: var(--hover-text);
-        transform: translate(-0.25rem, -0.25rem);
-        background: var(--hover-bg);
-        box-shadow: 0.25rem 0.25rem var(--bg);
-    }
 
-        .button:active {
-        transform: translate(0);
-        box-shadow: none;
-    }
     
     .card {
         border: 5px solid rgb(0, 0, 0);
@@ -101,8 +91,55 @@
         text-decoration: none !important;
     }
 
-</style>
+    .button-edit {
+            --bg: rgb(151, 110, 32);
+        --hover-bg: rgb(255, 166, 0);
+        --hover-text: #000;
+        color: #fff;
+        cursor: pointer;
+        border: 1px solid var(--bg);
+        
+        padding: 4px 10px;
+        background: var(--bg);
+        transition: 0.2s;
+        text-decoration: none !important;
+    }
+    .button-edit:hover {
+        color: var(--hover-text);
+        transform: translate(-0.25rem, -0.25rem);
+        background: var(--hover-bg);
+        box-shadow: 0.25rem 0.25rem var(--bg);
+    }
 
+        .button-edit:active {
+        transform: translate(0);
+        box-shadow: none;
+    }
+    .button-hapus {
+            --bg: rgb(151, 32, 32);
+        --hover-bg: rgb(255, 121, 121);
+        --hover-text: #000;
+        color: #fff;
+        cursor: pointer;
+        border: 1px solid var(--bg);
+        
+        padding: 4px 10px;
+        background: var(--bg);
+        transition: 0.2s;
+        text-decoration: none !important;
+    }
+    .button-hapus:hover {
+        color: var(--hover-text);
+        transform: translate(-0.25rem, -0.25rem);
+        background: var(--hover-bg);
+        box-shadow: 0.25rem 0.25rem var(--bg);
+    }
+
+        .button-hapus:active {
+        transform: translate(0);
+        box-shadow: none;
+    }
+</style>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <div class="container-fluid">
@@ -114,7 +151,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" href="barang.php">Barang</a></li>
                 <li class="nav-item"><a class="nav-link" href="pembelian.php">Pembelian</a></li>
-                <li class="nav-item"><a class="nav-link" href="penjualan.php">Penjualan</a></li>
+                <li class="nav-item"><a class="nav-link" href="laporan.php">Laporan</a></li>
                 <li class="nav-item"><a class="nav-link" href="supplier.php">Supplier</a></li>
 
                 <!-- Show "Data User" only for admin users -->

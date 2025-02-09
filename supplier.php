@@ -1,11 +1,7 @@
 <?php
 session_start();
 
-// Check if the user is logged in and is an administrator
-if (!isset($_SESSION['username']) || $_SESSION['level'] != 'administrator') {
-    echo "<div style='text-align:center; margin-top:50px; font-size:24px; color:red;'>You don't have access to this page.</div>";
-    exit();
-}
+
 
 // Database connection
 $host = "localhost";
@@ -93,7 +89,7 @@ if ($result === false) {
 <?php include 'navbar.php'; ?>
 
 <div class="container mt-5">
-    <h2 class="text-center">Manage supplier</h2>
+    <h2 class="text-center">Supplier</h2>
 
     <?php if (isset($error)) { echo "<div class='alert alert-danger'>$error</div>"; } ?>
     <?php if (isset($success)) { echo "<div class='alert alert-success'>$success</div>"; } ?>
@@ -102,37 +98,37 @@ if ($result === false) {
     <div class="card p-4 mb-4"
      onmouseover="this.style.borderColor='rgb(0, 162, 255)'" 
         onmouseout="this.style.borderColor='rgb(0, 0, 0)'" >
-        <h3>Add New Supplier</h3>
+        <h3>Tambahkan Supplier baru</h3>
         <form method="post" action="">
             <div class="mb-3">
-                <label class="form-label">Supplier Name</label>
+                <label class="form-label">Nama Supplier </label>
                 <input type="text" name="nama_supplier" class="form-control" required>
             </div>
             <div class="mb-3">
-                <label class="form-label">Address</label>
+                <label class="form-label">Alamat</label>
                 <input type="text" name="alamat" class="form-control" required>
             </div>
             <div class="mb-3">
-                <label class="form-label">Phone Number</label>
+                <label class="form-label">Nomor Telepon</label>
                 <input type="text" name="nomor_telepon" class="form-control" required>
             </div>
-            <button type="submit" name="add_supplier" class="button">Add Supplier</button>
+            <button type="submit" name="add_supplier" class="button">Tambahkan Supplier</button>
         </form>
     </div>
 
     <!-- Show Current supplier in a Table -->
     <div class="mt-4">
-        <h3>Current Supplier</h3>
+        <h3>list Supplier Sekarang   </h3>
         <table class="table table-striped table-bordered"
      onmouseover="this.style.borderColor='rgb(0, 162, 255)'" 
         onmouseout="this.style.borderColor='rgb(0, 0, 0)'" >
             <thead class="table-dark">
                 <tr>
                     <th>ID</th>
-                    <th>Supplier Name</th>
-                    <th>Address</th>
-                    <th>Phone Number</th>
-                    <th>Actions</th>
+                    <th>Nama Supplier</th>
+                    <th>Alamat</th>
+                    <th>Nomor Telepon</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -144,13 +140,13 @@ if ($result === false) {
                             <td><?php echo $row['alamat']; ?></td>
                             <td><?php echo $row['nomor_telepon']; ?></td>
                             <td>
-                                <a href="edit_supplier.php?id=<?php echo $row['id_supplier']; ?>" class="btn btn-warning btn-sm">Edit</a>
-                                <a href="?delete=<?php echo $row['id_supplier']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+                                <a href="edit_supplier.php?id=<?php echo $row['id_supplier']; ?>" class="button-edit btn-sm">Edit</a>
+                                <a href="?delete=<?php echo $row['id_supplier']; ?>" class="button-hapus btn-sm" onclick="return confirm('Are you sure?')">Hapus</a>
                             </td>
                         </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
-                    <tr><td colspan="5" class="text-center">No supplier found.</td></tr>
+                    <tr><td colspan="5" class="text-center">Supplier Tidak Ditemukan.</td></tr>
                 <?php endif; ?>
             </tbody>
         </table>

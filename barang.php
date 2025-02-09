@@ -16,10 +16,9 @@ if ($koneksi->connect_error) {
 if (isset($_POST['add_barang'])) {
     $nama_barang = $_POST['nama_barang'];
     $harga_barang = $_POST['harga_barang'];
-    $stok = $_POST['stok'];
     
-    $query = $koneksi->prepare("INSERT INTO barang (nama_barang, harga_barang, stok) VALUES (?, ?, ?)");
-    $query->bind_param("sii", $nama_barang, $harga_barang, $stok);
+    $query = $koneksi->prepare("INSERT INTO barang (nama_barang, harga_barang) VALUES (?, ?)");
+    $query->bind_param("si", $nama_barang, $harga_barang);
     $query->execute();
     header("Location: barang.php");
     exit();
@@ -69,8 +68,8 @@ $result = $koneksi->query("SELECT * FROM barang");
     <?php include('navbar.php'); ?>
 
     <div class="container mt-5">
-        <h2>Barang Management</h2>
-        <button class="button mb-3" data-bs-toggle="modal" data-bs-target="#addModal">Add Barang</button>
+        <h2>Barang Manajemen</h2>
+        <button class="button mb-3" data-bs-toggle="modal" data-bs-target="#addModal">Tambah Barang</button>
         <table class="table table-bordered"onmouseover="this.style.borderColor='rgb(0, 162, 255)'" 
         onmouseout="this.style.borderColor='rgb(0, 0, 0)'" >
         <tr>
@@ -78,7 +77,7 @@ $result = $koneksi->query("SELECT * FROM barang");
                 <th>Nama Barang</th>
                 <th>Harga</th>
                 <th>Stok</th>
-                <th>Actions</th>
+                <th>Aksi</th>
             </tr>
             <?php while ($row = $result->fetch_assoc()) { ?>
             <tr>
@@ -87,8 +86,8 @@ $result = $koneksi->query("SELECT * FROM barang");
                 <td><?= $row['harga_barang'] ?></td>
                 <td><?= $row['stok'] ?></td>
                 <td>
-                    <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['id_barang'] ?>">Edit</button>
-                    <a href="?delete=<?= $row['id_barang'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+                    <button class="button-edit btn-sm" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['id_barang'] ?>">Edit</button>
+                    <a href="?delete=<?= $row['id_barang'] ?>" class="button-hapus btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
                 </td>
             </tr>
             <div class="modal fade" id="editModal<?= $row['id_barang'] ?>" tabindex="-1">
@@ -105,8 +104,6 @@ $result = $koneksi->query("SELECT * FROM barang");
                                 <input type="text" name="nama_barang" class="form-control" value="<?= $row['nama_barang'] ?>" required>
                                 <label>Harga</label>
                                 <input type="number" name="harga_barang" class="form-control" value="<?= $row['harga_barang'] ?>" required>
-                                <label>Stok</label>
-                                <input type="number" name="stok" class="form-control" value="<?= $row['stok'] ?>" required>
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" name="edit_barang" class="btn btn-success">Save Changes</button>
@@ -133,8 +130,6 @@ $result = $koneksi->query("SELECT * FROM barang");
                         <input type="text" name="nama_barang" class="form-control" required>
                         <label>Harga</label>
                         <input type="number" name="harga_barang" class="form-control" required>
-                        <label>Stok</label>
-                        <input type="number" name="stok" class="form-control" required>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" name="add_barang" class="btn btn-primary">Add</button>

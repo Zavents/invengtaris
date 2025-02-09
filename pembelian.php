@@ -67,10 +67,6 @@ $query->execute();
         $result = $query->get_result();
         $row = $result->fetch_assoc();
 
-        if ($row['stok'] < $jumlah) {
-            echo "Insufficient stock for item " . $barang_id . ".";
-            exit();
-        }
 
         // Update stock quantity after purchase
         $query = $koneksi->prepare("UPDATE barang SET stok = stok + ? WHERE id_barang = ?");
@@ -170,7 +166,7 @@ $barang = $koneksi->query("SELECT * FROM barang");
                                 </option>
                             <?php } ?>
                         </select>
-                        <input type="number" name="jumlah_barang[]" class="jumlah form-control" placeholder="jumlah barang" oninput="updateTotal()" required>
+                        <input type="number" name="jumlah_barang[]" class="jumlah form-control" placeholder="Jumlah Barang" oninput="updateTotal()" required>
                     </div>
                 </div>
 
@@ -178,7 +174,7 @@ $barang = $koneksi->query("SELECT * FROM barang");
                 <input type="date" name="tanggal_pembelian" class="form-control" required>
                 
                 <label>Total Harga</label>
-                <input type="number" id="total_harga" name="total_harga" class="form-control" readonly>
+                <input type="number" id="total_harga" name="total_harga" placeholder="Total Harga" class="form-control" readonly>
                 
                 <label>Nama Supplier</label>
                 <select name="id_supplier" class="form-control" required>
