@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Check if the user is logged in and an administrator
 if (!isset($_SESSION['username']) || $_SESSION['level'] != 'administrator') {
     echo "<div style='text-align:center; margin-top:50px; font-size:24px; color:red;'>You don't have access to this page.</div>";
     exit();
@@ -152,7 +151,6 @@ $result = $koneksi->query($query);
     <?php if (isset($error)) { echo "<div class='alert alert-danger'>$error</div>"; } ?>
     <?php if (isset($success)) { echo "<div class='alert alert-success'>$success</div>"; } ?>
 
-    <!-- Add New User Form -->
     <div class="card p-4 mb-4" onmouseover="this.style.borderColor='rgb(0, 162, 255)'" onmouseout="this.style.borderColor='rgb(0, 0, 0)'">
     <h3>Tambahkan User Baru</h3>
     <form method="post" action="">
@@ -191,7 +189,6 @@ $result = $koneksi->query($query);
 </div>
 
 
-    <!-- Show Current Users in a Table -->
     <div class="mt-4">
         <h3>Current Users</h3>
         <table class="table table-striped table-bordered"

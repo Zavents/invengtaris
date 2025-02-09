@@ -18,20 +18,18 @@ $success_message = "";
 $error_message = "";
 
 if (isset($_POST['add'])) {
-    // Sanitize inputs
     $id_supplier = $_POST['id_supplier'];
     $tanggal_pembelian = date('Y-m-d', strtotime($_POST['tanggal_pembelian']));
     $total_harga = $_POST['total_harga'];
     $barang_ids = $_POST['barang'];
     $jumlah_barang = $_POST['jumlah_barang'];
 
-    // Validate inputs
     if (empty($barang_ids) || empty($jumlah_barang)) {
         echo "Please select at least one item and specify the quantity.";
         exit();
     }
     
-    $id_user = $_SESSION['id_user']; // Pastikan sesi menyimpan id_user yang valid
+    $id_user = $_SESSION['id_user'];
     $query = $koneksi->prepare("INSERT INTO pembelian (id_user, id_supplier, tanggal_pembelian, total_harga) VALUES (?, ?, ?, ?)");
     $query->bind_param("iiss", $id_user, $id_supplier, $tanggal_pembelian, $total_harga);
     
@@ -40,27 +38,19 @@ if (isset($_POST['add'])) {
         exit();
     }
     
-    // Get the last inserted purchase ID
     $id_pembelian = $query->insert_id;
 
-    // Loop through each item and add it to the detail_pembelian table
     foreach ($barang_ids as $index => $barang_id) {
         $jumlah = intval($jumlah_barang[$index]);
         
-        // Insert item details into the purchase detail table
-// Get id_user from session
-$id_user = $_SESSION['id_user'];  // Assuming user is logged in
+$id_user = $_SESSION['id_user']; 
 
-// Prepare the insert query with id_user
 $query = $koneksi->prepare("REPLACE INTO detail_pembelian (id_pembelian, id_barang, jumlah_barang, id_user) VALUES (?, ?, ?, ?)");
 
-// Bind the parameters (including id_user)
 $query->bind_param("iiii", $id_pembelian, $barang_id, $jumlah, $id_user);
 
-// Execute the query
 $query->execute();
 
-        // Check stock before updating
         $query = $koneksi->prepare("SELECT stok FROM barang WHERE id_barang = ?");
         $query->bind_param("i", $barang_id);
         $query->execute();
@@ -68,7 +58,6 @@ $query->execute();
         $row = $result->fetch_assoc();
 
 
-        // Update stock quantity after purchase
         $query = $koneksi->prepare("UPDATE barang SET stok = stok + ? WHERE id_barang = ?");
         $query->bind_param("ii", $jumlah, $barang_id);
         if (!$query->execute()) {
@@ -76,7 +65,6 @@ $query->execute();
             exit();
         }
 
-        // Log the purchase into laporan_inventaris
         $query = $koneksi->prepare("INSERT INTO laporan_inventaris (id_barang, id_user, id_supplier, jumlah, tanggal) VALUES (?, ?, ?, ?, ?)");
         $tanggal = date('Y-m-d H:i:s');
         $query->bind_param("iiiss", $barang_id, $id_user, $id_supplier, $jumlah, $tanggal);
@@ -86,7 +74,6 @@ $query->execute();
         }
     }
     
-    // Redirect to the purchase page
     header("Location: pembelian.php");
     exit();
 }

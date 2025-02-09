@@ -1,9 +1,6 @@
 <?php
 session_start();
 
-
-
-// Database connection
 $host = "localhost";
 $user = "root";
 $password = "";
@@ -15,13 +12,11 @@ if ($koneksi->connect_error) {
     die("Connection failed: " . $koneksi->connect_error);
 }
 
-// Handle adding new supplier
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_supplier'])) {
     $nama_supplier = $_POST['nama_supplier'];
     $alamat = $_POST['alamat'];
     $nomor_telepon = $_POST['nomor_telepon'];
 
-    // Insert supplier into database
     $query = $koneksi->prepare("INSERT INTO supplier (nama_supplier, alamat, nomor_telepon) VALUES (?, ?, ?)");
     $query->bind_param("sss", $nama_supplier, $alamat, $nomor_telepon);
     $query->execute();
@@ -33,7 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_supplier'])) {
     }
 }
 
-// Handle delete supplier
 if (isset($_GET['delete'])) {
     $id_supplier = $_GET['delete'];
     $query = $koneksi->prepare("DELETE FROM supplier WHERE id_supplier = ?");
@@ -48,7 +42,6 @@ if (isset($_GET['delete'])) {
     }
 }
 
-// Handle edit supplier
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_supplier'])) {
     $id_supplier = $_POST['id_supplier'];
     $nama_supplier = $_POST['nama_supplier'];
@@ -66,11 +59,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_supplier'])) {
     }
 }
 
-// Fetch all supplier and check for errors in the query
 $query = "SELECT id_supplier, nama_supplier, alamat, nomor_telepon FROM supplier";
 $result = $koneksi->query($query);
 
-// Check if query was successful
 if ($result === false) {
     $error = "Failed to retrieve supplier from the database.";
 }
@@ -85,7 +76,6 @@ if ($result === false) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body style="background-image: url(./img/bg.png);">
-<!-- Include Navbar -->
 <?php include 'navbar.php'; ?>
 
 <div class="container mt-5">
@@ -94,7 +84,6 @@ if ($result === false) {
     <?php if (isset($error)) { echo "<div class='alert alert-danger'>$error</div>"; } ?>
     <?php if (isset($success)) { echo "<div class='alert alert-success'>$success</div>"; } ?>
 
-    <!-- Add New Supplier Form -->
     <div class="card p-4 mb-4"
      onmouseover="this.style.borderColor='rgb(0, 162, 255)'" 
         onmouseout="this.style.borderColor='rgb(0, 0, 0)'" >
@@ -116,7 +105,6 @@ if ($result === false) {
         </form>
     </div>
 
-    <!-- Show Current supplier in a Table -->
     <div class="mt-4">
         <h3>list Supplier Sekarang   </h3>
         <table class="table table-striped table-bordered"

@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Check if the user is logged in and an administrator
 if (!isset($_SESSION['username']) || $_SESSION['level'] != 'administrator') {
     echo "<div style='text-align:center; margin-top:50px; font-size:24px; color:red;'>You don't have access to this page.</div>";
     exit();
@@ -21,7 +20,6 @@ if ($koneksi->connect_error) {
 if (isset($_GET['id'])) {
     $id_user = $_GET['id'];
 
-    // Fetch the user data to prefill the form
     $query = $koneksi->prepare("SELECT * FROM users WHERE id_user = ?");
     $query->bind_param("i", $id_user);
     $query->execute();
@@ -35,7 +33,6 @@ if (isset($_GET['id'])) {
     }
 }
 
-// Handle the update
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_user'])) {
     $username = $_POST['username'];
     $name = $_POST['name'];
@@ -64,7 +61,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_user'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body style="background-image: url(./img/bg.png);">
-<!-- Include Navbar -->
 <?php include 'navbar.php'; ?>
 
 <div class="container mt-5">

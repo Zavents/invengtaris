@@ -1,13 +1,10 @@
 <?php
-$host = "localhost"; // Ganti dengan host database Anda jika perlu
-$user = "root"; // Ganti dengan username database Anda
-$password = ""; // Ganti dengan password database Anda
+$host = "localhost";
+$password = ""; 
 $database = "inventaris";
 
-// Membuat koneksi
 $koneksi = new mysqli($host, $user, $password, $database);
 
-// Cek koneksi
 if ($koneksi->connect_error) {
     die("Koneksi gagal: " . $koneksi->connect_error);
 } else {

@@ -1,13 +1,11 @@
 <?php
 session_start();
 
-// Check if the user is logged in and is an administrator
 if (!isset($_SESSION['username']) || $_SESSION['level'] != 'administrator') {
     echo "<div style='text-align:center; margin-top:50px; font-size:24px; color:red;'>You don't have access to this page.</div>";
     exit();
 }
 
-// Database connection
 $host = "localhost";
 $user = "root";
 $password = "";
@@ -19,7 +17,6 @@ if ($koneksi->connect_error) {
     die("Connection failed: " . $koneksi->connect_error);
 }
 
-// Check if the ID is provided
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     header("Location: supplier.php");
     exit();
@@ -27,7 +24,6 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 
 $id_supplier = $_GET['id'];
 
-// Fetch supplier data to edit
 $query = $koneksi->prepare("SELECT * FROM supplier WHERE id_supplier = ?");
 $query->bind_param("i", $id_supplier);
 $query->execute();
@@ -40,7 +36,6 @@ if ($result->num_rows == 0) {
 
 $supplier = $result->fetch_assoc();
 
-// Handle edit supplier
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_supplier'])) {
     $nama_supplier = $_POST['nama_supplier'];
     $alamat = $_POST['alamat'];
@@ -68,7 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_supplier'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body style="background-image: url(./img/bg.png);">
-<!-- Include Navbar -->
 <?php include 'navbar.php'; ?>
 
 <div class="container mt-5">
@@ -77,7 +71,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_supplier'])) {
     <?php if (isset($error)) { echo "<div class='alert alert-danger'>$error</div>"; } ?>
     <?php if (isset($success)) { echo "<div class='alert alert-success'>$success</div>"; } ?>
 
-    <!-- Edit Supplier Form -->
     <div class="card p-4 mb-4"
      onmouseover="this.style.borderColor='rgb(0, 162, 255)'" 
         onmouseout="this.style.borderColor='rgb(0, 0, 0)'" >

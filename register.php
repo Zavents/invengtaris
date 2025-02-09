@@ -16,11 +16,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
     
-    // Check if passwords match
     if ($password != $confirm_password) {
         $error = "Password dan konfirmasi password tidak cocok.";
     } else {
-        // Check if username already exists
         $query = $koneksi->prepare("SELECT * FROM users WHERE username = ?");
         $query->bind_param("s", $username);
         $query->execute();
@@ -29,12 +27,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
         if ($result->num_rows > 0) {
             $error = "Username sudah terdaftar.";
         } else {
-            // Hash the password before storing it
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             
-            // Insert new user into the database
             $query = $koneksi->prepare("INSERT INTO users (username, password, level) VALUES (?, ?, ?)");
-            $level = "user"; // Set default level
+            $level = "user";
             $query->bind_param("sss", $username, $hashed_password, $level);
             $query->execute();
             

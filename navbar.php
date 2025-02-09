@@ -9,7 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Supplier</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Add Poppins font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -153,15 +152,12 @@
                 <li class="nav-item"><a class="nav-link" href="pembelian.php">Pembelian</a></li>
                 <li class="nav-item"><a class="nav-link" href="laporan.php">Laporan</a></li>
                 <li class="nav-item"><a class="nav-link" href="supplier.php">Supplier</a></li>
-
-                <!-- Show "Data User" only for admin users -->
                 <?php if (isset($_SESSION['level']) && $_SESSION['level'] == 'administrator'): ?>
                     <li class="nav-item"><a class="nav-link" href="data_user.php">Data User</a></li>
                 <?php endif; ?>
             </ul>
         </div>
         
-        <!-- Display Username and Logout Button -->
         <div class="d-flex align-items-center">
             <span class="text-white me-3">
                 <?php echo isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest'; ?>

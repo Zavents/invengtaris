@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Database connection
 $host = "localhost";
 $user = "root";
 $password = "";
@@ -12,7 +11,6 @@ if ($koneksi->connect_error) {
     die("Koneksi gagal: " . $koneksi->connect_error);
 }
 
-// Handle adding a new barang
 if (isset($_POST['add_barang'])) {
     $nama_barang = $_POST['nama_barang'];
     $harga_barang = $_POST['harga_barang'];
@@ -24,7 +22,6 @@ if (isset($_POST['add_barang'])) {
     exit();
 }
 
-// Handle editing a barang
 if (isset($_POST['edit_barang'])) {
     $id_barang = $_POST['id_barang'];
     $nama_barang = $_POST['nama_barang'];
@@ -37,8 +34,6 @@ if (isset($_POST['edit_barang'])) {
     header("Location: barang.php");
     exit();
 }
-
-// Handle deleting a barang
 if (isset($_GET['delete'])) {
     $id_barang = $_GET['delete'];
     
@@ -49,7 +44,6 @@ if (isset($_GET['delete'])) {
     exit();
 }
 
-// Fetch all barang
 $result = $koneksi->query("SELECT * FROM barang");
 ?>
 
@@ -64,7 +58,6 @@ $result = $koneksi->query("SELECT * FROM barang");
 
 </head>
 <body style="background-image: url(./img/bg.png);">
-    <!-- Include Navbar -->
     <?php include('navbar.php'); ?>
 
     <div class="container mt-5">
@@ -116,7 +109,6 @@ $result = $koneksi->query("SELECT * FROM barang");
         </table>
     </div>
 
-    <!-- Add Modal -->
     <div class="modal fade" id="addModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">

@@ -5,13 +5,11 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-// Database connection
 $conn = new mysqli("localhost", "root", "", "inventaris");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch data
 $barangResult = $conn->query("SELECT COUNT(*) as total_barang, SUM(stok) as total_stok FROM barang");
 $barang = $barangResult->fetch_assoc();
 
@@ -87,7 +85,6 @@ $user = $userResult->fetch_assoc();
 </head>
 <body>
 
-<!-- Include Navbar -->
 <?php include 'navbar.php'; ?>
 
 <div class="container text-center mt-5">

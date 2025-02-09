@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
         $user = $result->fetch_assoc();
         if (password_verify($password, $user['password'])) {
 
-            $_SESSION['id_user'] = $user['id_user']; // Tambahkan ini   
+            $_SESSION['id_user'] = $user['id_user'];
             
             $_SESSION['username'] = $user['username'];
             $_SESSION['level'] = $user['level'];

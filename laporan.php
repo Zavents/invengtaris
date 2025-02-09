@@ -15,7 +15,6 @@ if ($koneksi->connect_error) {
     die("Koneksi gagal: " . $koneksi->connect_error);
 }
 
-// Fetch all transactions from laporan table
 $logs = $koneksi->query("SELECT * FROM laporan_inventaris ORDER BY tanggal DESC");
 
 ?>
